@@ -1,0 +1,40 @@
+select metric_master.metric_name, Temp.metric_value from (select * from collected_metric where device_id = 36 order by collected_metric_id desc limit 1000 ) as Temp left join metric_master on metric_master.metric_id = Temp.metric_id  where metric_master.metric_id = 8 order by Temp.collected_metric_id desc limit 1 | tail -n 1 | cut -f 1,2
+
+
+
+Mindtree@12345
+
+
+mysql -u root -pmwatch123 cloudops_db  -e "select metric_master.metric_name, Temp.metric_value from (select * from collected_metric where device_id = 38 order by collected_metric_id desc limit 1000 ) as Temp left join metric_master on metric_master.metric_id = Temp.metric_id  where metric_master.metric_id = 32 order by Temp.collected_metric_id desc limit 1"
+
+
+
+
+mysql> select * from device where device_id = 38;
++-----------+---------+----------+---------------+-------------+------------------+-------------------+--------------------------------------------+-----------------+----------------+--------+---------------+--------------+-----------------+---------+
+| device_id | enabled | hostname | insert_time   | instance_id | instanceIdType   | modification_time | privateIpAddress                           | publicIpAddress | resource_group | STATUS | TIMESTAMP     | namespace_id | subscription_id | zone_id |
++-----------+---------+----------+---------------+-------------+------------------+-------------------+--------------------------------------------+-----------------+----------------+--------+---------------+--------------+-----------------+---------+
+|        38 |        | MGMT     | 1552341640688 | MGMT        | LoadBalancerName |     1552341640688 | MGMT-555608292.us-east-2.elb.amazonaws.com | NA              | NA             | NEW    | 1552319730540 |            3 |               1 |       2 |
++-----------+---------+----------+---------------+-------------+------------------+-------------------+--------------------------------------------+-----------------+----------------+--------+---------------+--------------+-----------------+---------+
+1 row in set (0.00 sec)
+
+
+mysql>  select * from metric_master where namespace_id =3;
++-----------+---------+-------------------------+-------+--------------+
+| metric_id | enabled | metric_name             | unit  | namespace_id |
++-----------+---------+-------------------------+-------+--------------+
+|        32 |        | SurgeQueueLength        | Count |            3 |
+|        33 |        | SpilloverCount          | Count |            3 |
+|        34 |        | RequestCount            | Count |            3 |
+|        35 |        | Latency                 | Count |            3 |
+|        36 |        | HTTPCode_ELB_5XX        | Count |            3 |
+|        37 |        | HTTPCode_ELB_4XX        | Count |            3 |
+|        38 |        | HTTPCode_Backend_2XX    | Count |            3 |
+|        39 |        | HTTPCode_Backend_3XX    | Count |            3 |
+|        40 |        | HTTPCode_Backend_4XX    | Count |            3 |
+|        41 |        | HTTPCode_Backend_5XX    | Count |            3 |
+|        42 |        | HealthyHostCount        | Count |            3 |
+|        43 |        | UnHealthyHostCount      | Count |            3 |
+|        44 |        | BackendConnectionErrors | Count |            3 |
+|        47 |        | availability            | Count |            3 |
++-----------+---------+-------------------------+-------+--------------+
